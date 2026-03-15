@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12 Plato — Prospecting SOP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Sarabun',sans-serif; background:#F0F2F5; color:#1a1a2e; padding:24px; }
+
+  .page-header {
+    background: linear-gradient(135deg,#1A1A2E 0%,#0F3460 60%,#E94560 100%);
+    border-radius:16px; padding:28px 36px; margin-bottom:24px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .page-header h1 { color:#fff; font-size:21px; font-weight:800; }
+  .page-header .sub { color:rgba(255,255,255,0.7); font-size:12px; margin-top:4px; }
+  .badge { background:#E94560; color:#fff; font-size:11px; font-weight:700; padding:6px 14px; border-radius:20px; letter-spacing:1px; white-space:nowrap; }
+
+  .rule-banner {
+    background:#FFF3CD; border:2px solid #F5A623; border-radius:10px;
+    padding:12px 20px; margin-bottom:24px; font-size:13px; font-weight:600; color:#7D5A00;
+    display:flex; gap:12px; align-items:center;
+  }
+
+  /* Weekly Targets Bar */
+  .targets-row {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px;
+  }
+  .target-card {
+    background:#fff; border-radius:10px; padding:14px 16px; text-align:center;
+    box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  }
+  .target-card .num { font-size:26px; font-weight:800; line-height:1; margin-bottom:4px; }
+  .target-card .lbl { font-size:11px; color:#6B7280; line-height:1.4; }
+
+  /* Method Cards */
+  .section-title {
+    font-size:13px; font-weight:800; color:#E94560; text-transform:uppercase;
+    letter-spacing:1px; margin-bottom:14px; padding-left:4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .methods-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
+
+  .method-card {
+    background:#fff; border-radius:12px; overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    border-top:4px solid #E5E7EB;
+  }
+  .method-header {
+    padding:14px 18px 10px; display:flex; justify-content:space-between; align-items:flex-start;
+  }
+  .method-title { font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px; }
+  .method-sub { font-size:11px; color:#6B7280; margin-top:3px; }
+  .method-meta {
+    display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end;
+  }
+  .meta-pill {
+    font-size:10px; font-weight:700; padding:3px 9px; border-radius:12px; white-space:nowrap;
+  }
+  .method-body { padding:0 18px 16px; }
+
+  .steps-label {
+    font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+    color:#9CA3AF; margin-bottom:8px; margin-top:12px;
+  }
+  .step-item {
+    display:flex; gap:10px; margin-bottom:8px; align-items:flex-start;
+  }
+  .step-num {
+    width:22px; height:22px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:11px; font-weight:800; color:#fff; flex-shrink:0;
+    margin-top:1px;
+  }
+  .step-text { font-size:12px; color:#374151; line-height:1.6; }
+  .step-text strong { color:#1A1A2E; }
+
+  .qualify-box {
+    background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px;
+    padding:10px 12px; margin-top:10px;
+  }
+  .qualify-box .qlabel {
+    font-size:10px; font-weight:700; color:#15803D; text-transform:uppercase; margin-bottom:6px;
+  }
+  .qualify-box ul { list-style:none; padding:0; }
+  .qualify-box ul li { font-size:11px; color:#166534; padding:2px 0; display:flex; gap:6px; }
+  .qualify-box ul li::before { content:'✓'; color:#16A34A; font-weight:700; flex-shrink:0; }
+
+  .reject-box {
+    background:#FEF2F2; border:1px solid #FCA5A5; border-radius:8px;
+    padding:8px 12px; margin-top:8px;
+  }
+  .reject-box .rlabel { font-size:10px; font-weight:700; color:#DC2626; margin-bottom:4px; }
+  .reject-box ul { list-style:none; padding:0; }
+  .reject-box ul li { font-size:11px; color:#7F1D1D; padding:1px 0; display:flex; gap:6px; }
+  .reject-box ul li::before { content:'✗'; color:#DC2626; font-weight:700; flex-shrink:0; }
+
+  .log-box {
+    background:#FFF9E6; border:1px solid #F5A623; border-radius:8px;
+    padding:8px 12px; margin-top:8px;
+  }
+  .log-box .llabel { font-size:10px; font-weight:700; color:#B45309; margin-bottom:4px; }
+  .log-box p { font-size:11px; color:#78350F; line-height:1.6; }
+
+  /* Divider method card colors */
+  .m1 { border-top-color:#6366F1; } .m1 .step-num { background:#6366F1; }
+  .m2 { border-top-color:#3B82F6; } .m2 .step-num { background:#3B82F6; }
+  .m3 { border-top-color:#EC4899; } .m3 .step-num { background:#EC4899; }
+  .m4 { border-top-color:#F59E0B; } .m4 .step-num { background:#F59E0B; }
+  .m5 { border-top-color:#10B981; } .m5 .step-num { background:#10B981; }
+  .m6 { border-top-color:#8B5CF6; } .m6 .step-num { background:#8B5CF6; }
+  .m7 { border-top-color:#EF4444; } .m7 .step-num { background:#EF4444; }
+  .m8 { border-top-color:#06B6D4; } .m8 .step-num { background:#06B6D4; }
+
+  .pill-time { background:#EFF6FF; color:#1D4ED8; }
+  .pill-leads { background:#ECFDF5; color:#065F46; }
+  .pill-type { background:#F5F3FF; color:#5B21B6; }
+
+  /* Weekly Schedule */
+  .schedule-table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:28px; }
+  .schedule-table th { background:#0F3460; color:#fff; padding:10px 14px; text-align:left; }
+  .schedule-table td { padding:10px 14px; border-bottom:1px solid #E5E7EB; vertical-align:top; }
+  .schedule-table tr:nth-child(even) td { background:#F8FAFC; }
+  .schedule-table .day { font-weight:800; color:#E94560; }
+
+  /* Record Rules */
+  .record-section {
+    background:#1A1A2E; border-radius:12px; padding:24px 28px; margin-top:4px;
+  }
+  .record-section h3 { font-size:15px; font-weight:800; color:#F5A623; margin-bottom:16px; }
+  .record-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .record-card {
+    background:rgba(255,255,255,0.07); border-radius:8px; padding:12px 14px;
+    border-left:3px solid #E94560;
+  }
+  .record-card .rc-label { font-size:10px; color:#E94560; font-weight:700; text-transform:uppercase; margin-bottom:6px; }
+  .record-card .rc-text { font-size:12px; color:#F3F4F6; line-height:1.6; }
+
+  .footer { text-align:center; margin-top:20px; font-size:11px; color:#9CA3AF; padding-bottom:20px; }
+
+  @media print { body { background:#fff; padding:12px; } .method-card { break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+  <div>
+    <h1>🍺 12 Plato Brewing — Prospecting SOP</h1>
+    <div class="sub">คู่มือการหา Lead สำหรับพนักงานขาย B2B KEG · ใช้งานได้ทันที · อัปเดต มีนาคม 2026</div>
+  </div>
+  <div class="badge">SOP v1.0</div>
+</div>
+
+<!-- Rule Banner -->
+<div class="rule-banner">
+  <span style="font-size:22px;">⚠️</span>
+  <span><strong style="color:#E94560;">กฎเหล็ก:</strong> ทุก Lead ที่หามาต้องบันทึกลง Sales Tracker ก่อนถือว่า "งานเสร็จ" — ถ้าไม่มีใน System ถือว่าไม่ได้หา</span>
+</div>
+
+<!-- Weekly Targets -->
+<div class="targets-row">
+  <div class="target-card">
+    <div class="num" style="color:#6366F1">5</div>
+    <div class="lbl">New Leads<br>/สัปดาห์ (ขั้นต่ำ)</div>
+  </div>
+  <div class="target-card">
+    <div class="num" style="color:#3B82F6">5</div>
+    <div class="lbl">Cold Visits<br>/สัปดาห์</div>
+  </div>
+  <div class="target-card">
+    <div class="num" style="color:#F59E0B">1</div>
+    <div class="lbl">Tasting Appointment<br>/สัปดาห์</div>
+  </div>
+  <div class="target-card">
+    <div class="num" style="color:#10B981">2</div>
+    <div class="lbl">New Customers<br>/เดือน</div>
+  </div>
+</div>
+
+<!-- Methods -->
+<div class="section-title">🔍 วิธีการหา Lead — 8 ช่องทาง</div>
+<div class="methods-grid">
+
+  <!-- METHOD 1: Google Maps -->
+  <div class="method-card m1">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🗺️ Google Maps</div>
+        <div class="method-sub">ช่องทางที่ได้ผลเร็วที่สุด — ข้อมูลครบ มีรูป มีรีวิว</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ 30 นาที/ครั้ง</span>
+        <span class="meta-pill pill-leads">🎯 5-10 leads</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">เปิด Google Maps → พิมพ์ Keyword + ย่านที่ต้องการ เช่น <strong>"bar สุขุมวิท"</strong>, <strong>"restaurant bar ทองหล่อ"</strong>, <strong>"craft beer อารีย์"</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">กรอง Rating <strong>≥ 4.0</strong> และดูรูปภาพร้าน — มองหา Tap Handle, Fridge Beer, หรือป้ายที่มีชื่อ Brand เบียร์</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">คลิกเข้าร้านแต่ละร้าน → จด ชื่อร้าน, ที่อยู่, เบอร์โทร, เว็บ/Facebook ลงสมุดหรือ Note บนมือถือ</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">ดู Reviews ล่าสุด — ร้านที่ยังมี Review ใหม่ในช่วง 1-3 เดือน = ยังเปิดอยู่</div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-text">บันทึกลง Lead Pipeline ทันที อย่ารอจนปลายวัน</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ เก็บไว้ใน Pipeline ถ้า</div>
+        <ul>
+          <li>มีรูปที่เห็น Tap / Fridge เบียร์ชัดเจน</li>
+          <li>ร้านยังเปิดอยู่ (Review ล่าสุดไม่เกิน 3 เดือน)</li>
+          <li>อยู่ใน Delivery Zone ของ 12 Plato</li>
+        </ul>
+      </div>
+      <div class="reject-box">
+        <div class="rlabel">✗ ข้ามไปถ้า</div>
+        <ul>
+          <li>ร้านปิดถาวร / รีวิวเกิน 6 เดือนแล้วไม่มีใหม่</li>
+          <li>เป็นร้านสะดวกซื้อ / ร้านขายส่งทั่วไป</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Google Maps" · ระบุ Zone · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 2: Wongnai -->
+  <div class="method-card m2">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🍽️ Wongnai</div>
+        <div class="method-sub">ค้นหาร้านอาหารที่มีบาร์ — ข้อมูลละเอียดกว่า Google Maps</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ 20 นาที/ครั้ง</span>
+        <span class="meta-pill pill-leads">🎯 3-5 leads</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">เปิด wongnai.com → เลือก หมวด <strong>"บาร์ & คลับ"</strong> หรือ <strong>"ร้านอาหาร"</strong> แล้วกรองพื้นที่</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ดูเมนูร้าน — ร้านที่มีหมวด <strong>"เครื่องดื่มแอลกอฮอล์"</strong> หรือ <strong>"Draft Beer"</strong> = เป้าหมาย</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ดูรูปอาหาร/บรรยากาศ — มองหารูปที่เห็น Bar Counter หรือ Tap System</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">จด Facebook Page หรือ LINE ของร้าน → ใช้ติดต่อได้โดยตรง</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ เก็บไว้ใน Pipeline ถ้า</div>
+        <ul>
+          <li>มีเมนูเบียร์ / เครื่องดื่มแอลกอฮอล์</li>
+          <li>ร้านมีบรรยากาศ Bar หรือ Gastropub</li>
+          <li>ราคาเครื่องดื่ม ≥ 150฿/แก้ว (Target Segment ตรง)</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Wongnai" · ระบุประเภทร้าน · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 3: Facebook / Instagram -->
+  <div class="method-card m3">
+    <div class="method-header">
+      <div>
+        <div class="method-title">📱 Facebook / Instagram</div>
+        <div class="method-sub">หาร้านที่ Active บน Social และ Community Craft Beer</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ 20 นาที/ครั้ง</span>
+        <span class="meta-pill pill-leads">🎯 3-7 leads</span>
+        <span class="meta-pill pill-type">สัปดาห์ละครั้ง</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน — Facebook Groups</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">เข้า Groups: <strong>"Thai Craft Beer"</strong>, <strong>"Craft Beer Bangkok"</strong>, <strong>"Beer Lovers Thailand"</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ดู Post ที่ร้านอาหาร/บาร์ Tag หรือ Comment — ร้านที่ Engage ใน Community = เปิดรับ Supplier ใหม่มากกว่า</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">Search Facebook: <strong>"craft beer tap"</strong>, <strong>"draft beer บาร์"</strong> → กรอง "Pages" เพื่อหาร้านใหม่</div></div>
+      <div class="steps-label" style="margin-top:10px;">ขั้นตอน — Instagram</div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">Search Hashtag: <strong>#craftbeerthailand</strong>, <strong>#beerbar</strong>, <strong>#taproom</strong>, <strong>#bangkokbar</strong></div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-text">ดูร้านที่ Post รูป Tap Handle หรือ Draft Beer → คลิก Profile → หา Contact / Website</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ เก็บไว้ใน Pipeline ถ้า</div>
+        <ul>
+          <li>มีรูป Tap หรือ Draft Beer ใน Feed</li>
+          <li>Post ล่าสุดไม่เกิน 1 เดือน (ยังเปิดอยู่)</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Facebook" หรือ "Instagram" · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 4: Cold Walk -->
+  <div class="method-card m4">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🚶 Cold Walk — สำรวจพื้นที่</div>
+        <div class="method-sub">ได้ข้อมูลที่ Google ไม่มี — เห็นร้านจริง Tap จริง เจ้าของจริง</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ 2-3 ชั่วโมง</span>
+        <span class="meta-pill pill-leads">🎯 5-10 leads</span>
+        <span class="meta-pill pill-type">1 ย่าน/สัปดาห์</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">เตรียมก่อนออก</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">เลือก <strong>1 ย่าน/สัปดาห์</strong> หมุนเวียน: ทองหล่อ → อารีย์ → สุขุมวิท → ลาดพร้าว → รัชดา → สาทร</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">เตรียม <strong>นามบัตร</strong> และ <strong>Pricelist PDF บนมือถือ</strong> — ถ้าเจ้าของอยู่ร้านสามารถ Approach ทันที</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ออกเดิน <strong>14:00-17:00</strong> — ช่วงที่ร้านอาหาร/บาร์เริ่ม Prep ก่อน Peak และเจ้าของมักอยู่</div></div>
+      <div class="steps-label" style="margin-top:10px;">ระหว่างเดิน</div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">มองหา: <strong>Tap Handle</strong> หน้าร้าน, <strong>Fridge Craft Beer</strong>, ป้าย Happy Hour, บรรยากาศ Bar</div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-text">ร้านไหนดูสนใจ → แวะเข้าไป แนะนำตัวสั้นๆ ว่ามาจาก 12 Plato และขอนามบัตร/ข้อมูลติดต่อ</div></div>
+      <div class="step-item"><div class="step-num">6</div><div class="step-text">ถ้ายังไม่พร้อม Approach → <strong>ถ่ายรูปหน้าร้าน</strong> แล้วบันทึกทีหลัง</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ สัญญาณที่ดีระหว่างเดิน</div>
+        <ul>
+          <li>เห็น Tap Handle หน้าบาร์ ≥ 2 ก๊อก</li>
+          <li>มี Fridge เบียร์ขวด/กระป๋อง Brand หลากหลาย</li>
+          <li>ร้านดูมีลูกค้าวัย 25-45 ปี</li>
+          <li>มีที่นั่ง ≥ 20 คน และมีบาร์เคาน์เตอร์</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Cold Walk" · ระบุย่าน · แนบรูปถ้ามี · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 5: Foodpanda / GrabFood -->
+  <div class="method-card m5">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🛵 Foodpanda / GrabFood</div>
+        <div class="method-sub">หาร้านที่ขาย Alcohol Delivery — มี License แน่นอน</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ 15 นาที/ครั้ง</span>
+        <span class="meta-pill pill-leads">🎯 3-5 leads</span>
+        <span class="meta-pill pill-type">สัปดาห์ละครั้ง</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">เปิด Foodpanda / GrabFood → เลือก Category <strong>"เครื่องดื่ม"</strong> หรือ <strong>"บาร์"</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">Search: <strong>"craft beer"</strong>, <strong>"draft beer"</strong>, <strong>"beer"</strong> → ดูร้านที่มีเบียร์ในเมนู</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">คลิกร้านที่สนใจ → ดูเมนูเบียร์ → ถ้ามีแค่เบียร์ขวด/กระป๋อง = โอกาสดีในการเสนอ Draft</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">หาชื่อร้านจริงๆ → Search ต่อใน Google Maps เพื่อหาเบอร์ติดต่อ</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ เก็บไว้ใน Pipeline ถ้า</div>
+        <ul>
+          <li>ร้านมีเมนูเบียร์อยู่แล้ว (มี Alcohol License)</li>
+          <li>ร้านมีรีวิวดีและ Order บ่อย</li>
+          <li>ยังไม่มี Draft Beer ใน Menu = โอกาส Upsell</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Foodpanda" หรือ "GrabFood" · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 6: LINE Groups / Communities -->
+  <div class="method-card m6">
+    <div class="method-header">
+      <div>
+        <div class="method-title">💬 LINE Groups / Communities</div>
+        <div class="method-sub">Network ที่คนไทยใช้จริงในวงการ F&B</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ Passive</span>
+        <span class="meta-pill pill-leads">🎯 1-3 leads</span>
+        <span class="meta-pill pill-type">เดือนละครั้ง</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">ขอเข้า LINE Group วงการ F&B / Restaurant Owner / Bar Owner ในกรุงเทพฯ — ถามจากคนรู้จักในวงการก่อน</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">อย่า Spam โฆษณา — แทนที่ด้วยการ <strong>แนะนำตัวสั้นๆ</strong> ว่าเป็น Sales จาก 12 Plato และพร้อมส่งตัวอย่างให้ชิม</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ถ้ามีคนสนใจตอบ → เก็บเป็น Lead ทันที ส่งต่อให้ Follow-up ภายใน 24 ชั่วโมง</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">ลูกค้าปัจจุบันที่พอใจ → <strong>ขอ Refer</strong> เพื่อนร้านอาหารในกลุ่มเดียวกัน</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ Lead จาก LINE มักมี Conversion สูง</div>
+        <ul>
+          <li>มี Social Proof — เห็นคนรู้จักซื้อแล้ว</li>
+          <li>Warm Lead — ไม่ใช่ Cold Contact</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "LINE" · Status = "Lead" · ระบุชื่อ Group ที่มาด้วย</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 7: Referral -->
+  <div class="method-card m7">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🤝 Referral — ลูกค้าแนะนำ</div>
+        <div class="method-sub">Conversion Rate สูงสุด 25-30% — ต้องขอทุกครั้ง</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ ขอทุกครั้งหลัง Close</span>
+        <span class="meta-pill pill-leads">🎯 1-2 leads</span>
+        <span class="meta-pill pill-type">ต่อลูกค้า 1 ราย</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">เมื่อไหร่ให้ขอ Referral</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>หลัง Close ได้ 1 สัปดาห์</strong> — ลูกค้าเพิ่งได้รับ KEG แรก → โทรถามว่าเบียร์เป็นอย่างไรบ้าง</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">ถ้าลูกค้าพอใจ → ถามตรงๆ ว่า <strong>"มีร้านเพื่อนๆ ที่คิดว่าน่าจะสนใจบ้างไหมครับ?"</strong></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">ถ้าลูกค้ายินดี Refer → ขอชื่อ + เบอร์ + บอกได้เลยว่า "คุณ X แนะนำมา" เมื่อโทรหา</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">บันทึก Lead ใหม่ทันที → Priority สูงกว่า Cold Lead ทั่วไป</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ ทำไม Referral ดีที่สุด</div>
+        <ul>
+          <li>Conversion Rate 25-30% สูงกว่า Cold 5-10x</li>
+          <li>ลูกค้ารู้จักกันอยู่แล้ว — ไม่ต้องสร้างความไว้ใจตั้งแต่ศูนย์</li>
+          <li>ไม่มีค่าใช้จ่าย</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Referral" · ระบุชื่อลูกค้าที่ Refer มา · Priority = สูง · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 8: Event / Trade -->
+  <div class="method-card m8">
+    <div class="method-header">
+      <div>
+        <div class="method-title">🎪 Events / Trade Fair</div>
+        <div class="method-sub">งาน F&B, Beer Festival, Restaurant Expo — พบเจ้าของร้านจำนวนมากในคราวเดียว</div>
+      </div>
+      <div class="method-meta">
+        <span class="meta-pill pill-time">⏱ ตามงาน</span>
+        <span class="meta-pill pill-leads">🎯 5-20 leads</span>
+        <span class="meta-pill pill-type">Opportunistic</span>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="steps-label">ขั้นตอน</div>
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">ติดตามงาน: <strong>THAIFEX, Beer & Beverage Expo, Bangkok Bar Show, งาน Craft Beer Festival</strong></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">เตรียมนามบัตร 50+ ใบ + Pricelist PDF พร้อม — เน้น Networking ไม่ใช่ขายทันที</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">คุยแนะนำตัว → แลกนามบัตร → บันทึก Contact ลง Phone ทันที อย่าให้หาย</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text"><strong>ภายใน 24 ชั่วโมงหลังงาน</strong> → Add LINE ทุกคนที่แลกนามบัตรมา + บันทึกลง Lead Pipeline</div></div>
+      <div class="qualify-box">
+        <div class="qlabel">✓ ได้ผลดีที่สุดถ้า</div>
+        <ul>
+          <li>Follow-up ภายใน 48 ชั่วโมง — คนยังจำหน้าได้</li>
+          <li>เอาตัวอย่างเบียร์ไปแจกให้ชิมด้วย</li>
+        </ul>
+      </div>
+      <div class="log-box">
+        <div class="llabel">✏️ บันทึกลง System</div>
+        <p>Source = "Event" · ระบุชื่องาน · Status = "Lead"</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Weekly Schedule -->
+<div class="section-title">📅 ตารางการหา Lead รายสัปดาห์ (แนะนำ)</div>
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th style="width:10%">วัน</th>
+      <th style="width:30%">กิจกรรมหลัก</th>
+      <th style="width:35%">รายละเอียด</th>
+      <th style="width:25%">เป้าหมาย</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="day">จันทร์</span></td>
+      <td>🗺️ Google Maps + 🍽️ Wongnai Research</td>
+      <td>นั่ง Search หาร้านใหม่ 2-3 ย่าน เก็บ Lead ลง Tracker</td>
+      <td>5 New Leads บันทึกลง System</td>
+    </tr>
+    <tr>
+      <td><span class="day">อังคาร</span></td>
+      <td>📞 Follow-up Leads เก่า + Cold Call</td>
+      <td>โทรหา Lead ที่ยังไม่ได้ Visit จากสัปดาห์ก่อน</td>
+      <td>Follow-up 5+ Leads, นัด Visit 2 ร้าน</td>
+    </tr>
+    <tr>
+      <td><span class="day">พุธ</span></td>
+      <td>🚶 Cold Walk ออกพื้นที่</td>
+      <td>สำรวจ 1 ย่านที่เลือกไว้ 14:00-17:00 น.</td>
+      <td>Visit 2-3 ร้าน, เก็บ Lead ใหม่ 3+ ร้าน</td>
+    </tr>
+    <tr>
+      <td><span class="day">พฤหัส</span></td>
+      <td>🍺 Tasting Appointment + 📱 Social Research</td>
+      <td>นัดชิมกับ Lead ที่ Qualify แล้ว + Search Facebook/IG</td>
+      <td>Tasting 1 ร้าน, เก็บ Lead ใหม่จาก Social 2+</td>
+    </tr>
+    <tr>
+      <td><span class="day">ศุกร์</span></td>
+      <td>📋 Weekly Report + Plan สัปดาห์หน้า</td>
+      <td>กรอก Weekly Report ใน Tracker + วางแผน Next Week</td>
+      <td>ส่ง Report ก่อน 17:00 น. ✅</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Recording Rules -->
+<div class="record-section">
+  <h3>✏️ สิ่งที่ต้องบันทึกลง Sales Tracker ทุกครั้ง</h3>
+  <div class="record-grid">
+    <div class="record-card">
+      <div class="rc-label">เมื่อเพิ่ม Lead ใหม่</div>
+      <div class="rc-text">
+        ชื่อร้าน · ที่อยู่ · Zone · ประเภทร้าน · มี Tap ไหม ·
+        ชื่อผู้ติดต่อ · เบอร์/LINE · <strong>แหล่งที่มา (Source)</strong> ·
+        วันที่เพิ่ม · Status = "Lead" · Follow-up Date
+      </div>
+    </div>
+    <div class="record-card">
+      <div class="rc-label">เมื่อมีการติดต่อ</div>
+      <div class="rc-text">
+        บันทึกใน Activity Log: วันที่ · ประเภท (Call/Visit/LINE) ·
+        ชื่อร้าน · ผลการติดต่อ · Next Action ·
+        <strong>Update Status ใน Lead Pipeline ทันที</strong>
+      </div>
+    </div>
+    <div class="record-card">
+      <div class="rc-label">ก่อนสิ้นวันทุกวัน</div>
+      <div class="rc-text">
+        ตรวจสอบว่า Activity ทุกอย่างที่ทำวันนี้ถูก Log ครบหรือยัง ·
+        Update Follow-up Date ที่จะถึง ·
+        <strong>ถ้าไม่มี Log = ไม่มีหลักฐานการทำงาน</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  12 Plato Brewing (Fastrak 2015 Co., Ltd.) · Prospecting SOP v1.0 · มีนาคม 2026 · สำหรับพนักงานขาย B2B KEG
+</div>
+
+</body>
+</html>

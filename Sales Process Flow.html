@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12 Plato Brewing — Sales Process Flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: #F0F2F5;
+    color: #1a1a2e;
+    padding: 24px;
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    background: linear-gradient(135deg, #1A1A2E 0%, #0F3460 60%, #E94560 100%);
+    border-radius: 16px;
+    padding: 28px 36px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .page-header h1 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .page-header .sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .badge {
+    background: #E94560;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Golden Rule Banner ── */
+  .golden-rule {
+    background: #FFF3CD;
+    border: 2px solid #F5A623;
+    border-radius: 10px;
+    padding: 14px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .golden-rule .icon { font-size: 26px; }
+  .golden-rule .text { font-size: 14px; font-weight: 600; color: #7D5A00; line-height: 1.6; }
+  .golden-rule .text strong { color: #E94560; }
+
+  /* ── Flow Container ── */
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Stage Card ── */
+  .stage-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  /* Arrow connector */
+  .arrow-row {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 60px;
+    height: 32px;
+    align-items: center;
+    position: relative;
+  }
+  .arrow-row .arrow-line {
+    width: 2px;
+    height: 100%;
+    background: #CBD5E0;
+    margin-left: 28px;
+    position: relative;
+  }
+  .arrow-row .arrow-label {
+    font-size: 11px;
+    color: #888;
+    margin-left: 10px;
+    font-style: italic;
+  }
+
+  .stage-number {
+    width: 60px;
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 18px;
+    position: relative;
+  }
+  .step-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: #fff;
+    flex-shrink: 0;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+  .stage-line {
+    width: 2px;
+    flex: 1;
+    background: #CBD5E0;
+    margin-top: 4px;
+    margin-bottom: -2px;
+  }
+
+  .stage-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-left: 14px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #E5E7EB;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    opacity: 0.06;
+    transform: translate(20px, -20px);
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stage-title {
+    font-size: 17px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stage-subtitle {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  .time-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .info-block {
+    background: #F8FAFC;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .info-block .label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #9CA3AF;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .info-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .info-block ul li {
+    font-size: 12px;
+    color: #374151;
+    padding: 2px 0;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .info-block ul li::before {
+    content: '•';
+    color: #9CA3AF;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .log-block {
+    background: #FFF8E7;
+    border: 1px solid #F5A623;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .log-block .label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #B7791F;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .log-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .log-block ul li {
+    font-size: 12px;
+    color: #78350F;
+    padding: 2px 0;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-weight: 500;
+  }
+  .log-block ul li::before {
+    content: '✏️';
+    flex-shrink: 0;
+    font-size: 10px;
+  }
+
+  .criteria-block {
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .criteria-block .icon { font-size: 18px; flex-shrink: 0; }
+  .criteria-block .text { font-size: 12px; font-weight: 600; line-height: 1.6; }
+
+  /* Stage colors */
+  .s1 { border-left-color: #6366F1; }
+  .s1 .step-circle { background: #6366F1; }
+  .s1::before { background: #6366F1; }
+  .s1 .stage-title { color: #4338CA; }
+  .s2 { border-left-color: #3B82F6; }
+  .s2 .step-circle { background: #3B82F6; }
+  .s2 .stage-title { color: #1D4ED8; }
+  .s3 { border-left-color: #06B6D4; }
+  .s3 .step-circle { background: #06B6D4; }
+  .s3 .stage-title { color: #0E7490; }
+  .s4 { border-left-color: #F59E0B; }
+  .s4 .step-circle { background: #F59E0B; }
+  .s4 .stage-title { color: #B45309; }
+  .s5 { border-left-color: #F97316; }
+  .s5 .step-circle { background: #F97316; }
+  .s5 .stage-title { color: #C2410C; }
+  .s6 { border-left-color: #10B981; }
+  .s6 .step-circle { background: #10B981; }
+  .s6 .stage-title { color: #065F46; }
+  .s7 { border-left-color: #8B5CF6; }
+  .s7 .step-circle { background: #8B5CF6; }
+  .s7 .stage-title { color: #5B21B6; }
+
+  .t-indigo { background: #EEF2FF; color: #4338CA; }
+  .t-blue   { background: #EFF6FF; color: #1D4ED8; }
+  .t-cyan   { background: #ECFEFF; color: #0E7490; }
+  .t-amber  { background: #FFFBEB; color: #B45309; }
+  .t-orange { background: #FFF7ED; color: #C2410C; }
+  .t-green  { background: #ECFDF5; color: #065F46; }
+  .t-purple { background: #F5F3FF; color: #5B21B6; }
+
+  .c-pass { background: #D1FAE5; }
+  .c-pass .text { color: #065F46; }
+  .c-fail { background: #FEE2E2; }
+  .c-fail .text { color: #991B1B; }
+
+  /* ── Rejection Branch ── */
+  .reject-note {
+    background: #FEF2F2;
+    border: 1px dashed #FCA5A5;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 11px;
+    color: #7F1D1D;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── Accountability Footer ── */
+  .accountability-section {
+    background: #1A1A2E;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-top: 28px;
+    color: #fff;
+  }
+  .accountability-section h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #F5A623;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .rule-card {
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-left: 3px solid #E94560;
+  }
+  .rule-card .rule-num {
+    font-size: 10px;
+    color: #E94560;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .rule-card .rule-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #F3F4F6;
+    line-height: 1.6;
+  }
+  .rule-card .rule-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* ── KPI Summary ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+    margin-bottom: 20px;
+  }
+  .kpi-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .kpi-card .kpi-num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-card .kpi-label {
+    font-size: 11px;
+    color: #6B7280;
+    line-height: 1.4;
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; padding: 12px; }
+    .stage-card { break-inside: avoid; }
+    .page-header { background: #1A1A2E !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+  <div>
+    <h1>🍺 12 Plato Brewing — Sales Process Flow</h1>
+    <div class="sub">B2B KEG Wholesale · พนักงานขายต้องปฏิบัติตามทุกขั้นตอน · อัปเดต: มีนาคม 2026</div>
+  </div>
+  <div class="badge">Sales SOP v1.0</div>
+</div>
+
+<!-- Golden Rule -->
+<div class="golden-rule">
+  <div class="icon">⚠️</div>
+  <div class="text">
+    <strong>กฎเหล็ก:</strong> ทุกขั้นตอนต้องบันทึกข้อมูลใน Sales Tracker ก่อนถือว่า "ทำแล้ว" — ถ้าไม่มีใน System ถือว่าไม่ได้ทำ<br>
+    <strong>Weekly Report ส่งทุกวันศุกร์ 17:00 น.</strong> ไม่ส่ง = ไม่มีหลักฐานการทำงาน
+  </div>
+</div>
+
+<!-- KPI Targets -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#6366F1">10</div>
+    <div class="kpi-label">New Leads<br>/สัปดาห์</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#06B6D4">5</div>
+    <div class="kpi-label">Cold Visits<br>/สัปดาห์</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#F59E0B">1</div>
+    <div class="kpi-label">Tasting<br>/สัปดาห์</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#10B981">2</div>
+    <div class="kpi-label">New Customers<br>/เดือน</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color:#E94560">0</div>
+    <div class="kpi-label">Leads ค้าง<br>&gt;7 วัน ไม่ Follow</div>
+  </div>
+</div>
+
+<!-- Flow -->
+<div class="flow-container">
+
+  <!-- STAGE 1: PROSPECT -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">1</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s1">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">🔍 PROSPECT — หาข้อมูลร้านเป้าหมาย</div>
+          <div class="stage-subtitle">ร้านอาหาร · บาร์ · โรงแรม · Craft Beer Bar · ร้านที่มีลูกค้ากลุ่มดื่มเบียร์</div>
+        </div>
+        <div class="time-badge t-indigo">⏱ ทำทุกวัน (10+ ร้าน/สัปดาห์)</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">📌 สิ่งที่ต้องทำ</div>
+          <ul>
+            <li>Search Google Maps: "bar", "restaurant", "hotel bar" + ย่าน</li>
+            <li>Search Wongnai: ร้านอาหาร/บาร์ที่มีเมนูเครื่องดื่ม</li>
+            <li>Facebook Group: Thai Craft Beer / ร้านอาหารใหม่</li>
+            <li>Cold Walk สำรวจย่าน 1 ย่าน/สัปดาห์</li>
+            <li>Foodpanda/GrabFood: ร้านที่มี Alcohol delivery</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">✅ ข้อมูลที่ต้องรวบรวมก่อน</div>
+          <ul>
+            <li>ชื่อร้าน + ที่อยู่ + Zone</li>
+            <li>ประเภทร้าน (Bar/Restaurant/Hotel)</li>
+            <li>มี Tap System ไหม? (ดูจากรูป)</li>
+            <li>ชื่อผู้ติดต่อ (เจ้าของ/ผู้จัดการ)</li>
+            <li>เบอร์โทร / LINE / Facebook</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>เพิ่ม Row ใหม่ใน Lead Pipeline</li>
+            <li>ระบุ Source (มาจากไหน)</li>
+            <li>ระบุวันที่เพิ่ม</li>
+            <li>Status = <strong>"Lead"</strong></li>
+            <li>กำหนด Follow-up date</li>
+          </ul>
+        </div>
+      </div>
+      <div class="criteria-block c-pass">
+        <div class="icon">➡️</div>
+        <div class="text">ผ่านไปขั้นถัดไปเมื่อ: มีข้อมูลร้านครบ (ชื่อ / ที่อยู่ / เบอร์ติดต่อ) และได้ประเมินเบื้องต้นแล้ว</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">ประเมินแล้วว่าร้านมีศักยภาพ</div>
+  </div>
+
+  <!-- STAGE 2: QUALIFY -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">2</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s2">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">📋 QUALIFY — คัดกรองก่อนเข้าหา</div>
+          <div class="stage-subtitle">ประหยัดเวลา · ไม่เข้าหาร้านที่ไม่มีศักยภาพ</div>
+        </div>
+        <div class="time-badge t-blue">⏱ ก่อน Cold Visit ทุกครั้ง</div>
+      </div>
+      <div class="grid-2">
+        <div class="info-block">
+          <div class="label">🔎 เช็คลิสต์ก่อน Approach</div>
+          <ul>
+            <li>ร้านเปิดอยู่จริง? (ดู Google Maps reviews ล่าสุด)</li>
+            <li>มี Tap system หรือ Fridge craft beer?</li>
+            <li>ขนาดร้าน: มีที่นั่งพอสมควร?</li>
+            <li>Segment ตรงกับ craft beer audience?</li>
+            <li>อยู่ใน Delivery Zone ที่เราทำได้?</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">🎯 Target ร้านที่ดีที่สุด</div>
+          <ul>
+            <li>มี Tap ≥ 2 ก๊อก อยู่แล้ว = Priority สูงสุด</li>
+            <li>ร้านอาหารที่มี Alcohol License + บาร์</li>
+            <li>Craft Beer Bar / Gastropub</li>
+            <li>Hotel Bar / Rooftop Bar / Pool Bar</li>
+            <li>Event Space / Co-Working ที่มี Bar</li>
+            <li>ร้านที่ลูกค้าอายุ 25-45 ปี และดื่มเบียร์</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+        <div class="criteria-block c-pass">
+          <div class="icon">✅</div>
+          <div class="text">Qualified: มี Tap + Volume + อยู่ใน Zone → ไป Approach</div>
+        </div>
+        <div class="criteria-block c-fail">
+          <div class="icon">❌</div>
+          <div class="text">Not Qualified: ไม่มี Tap / ไม่ใช่กลุ่มเป้าหมาย → Status = "Not Interested" + บันทึกเหตุผล</div>
+        </div>
+      </div>
+      <div class="log-block">
+        <div class="label">✏️ ต้อง LOG ลง System</div>
+        <ul>
+          <li>กรอก Qualify fields ใน Lead Pipeline (Tap: Yes/No, Est.Volume, ประเภทร้าน)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">Qualified แล้ว — พร้อมเข้าหา</div>
+  </div>
+
+  <!-- STAGE 3: APPROACH -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">3</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s3">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">🤝 APPROACH — เข้าหาครั้งแรก</div>
+          <div class="stage-subtitle">เป้าหมายของขั้นนี้คือนัด Tasting เท่านั้น — ยังไม่ต้องขาย</div>
+        </div>
+        <div class="time-badge t-cyan">⏱ ภายใน 3 วันหลัง Qualify</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">📞 วิธีเข้าหา</div>
+          <ul>
+            <li><strong>Cold Visit</strong>: แวะร้าน 14:00-17:00 น. (ก่อน peak)</li>
+            <li><strong>Cold Call</strong>: โทรนัด ใช้ Script ด้านล่าง</li>
+            <li><strong>LINE</strong>: Add LINE ร้าน ส่งข้อความสั้น</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">💬 Script เปิดการสนทนา</div>
+          <ul>
+            <li>"สวัสดีครับ ผมมาจาก 12 Plato Brewing เบียร์คราฟท์กรุงเทพ"</li>
+            <li>"อยากแวะมาแนะนำ product ให้ทราบครับ มีเวลาสักครู่ไหม?"</li>
+            <li>"ขอนัดให้ทีมเราเอาตัวอย่างมาให้ชิมได้ไหมครับ?"</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>Activity Log: ประเภท = "Cold Visit" หรือ "Cold Call"</li>
+            <li>บันทึกผลการติดต่อ</li>
+            <li>Update Status = <strong>"Contacted"</strong></li>
+            <li>กำหนด Follow-up date ถัดไป</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="criteria-block c-pass">
+          <div class="icon">➡️</div>
+          <div class="text">สนใจ + ยินดีรับนัด → Update Status "Visited" → ไป Tasting</div>
+        </div>
+        <div class="criteria-block" style="background:#FEF3C7;">
+          <div class="icon">🔄</div>
+          <div class="text" style="color:#92400E;">ยังไม่สะดวก → กำหนด Follow-up ใหม่ ห้ามเกิน 7 วัน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">นัด Tasting สำเร็จ</div>
+  </div>
+
+  <!-- STAGE 4: TASTING -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">4</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s4">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">🍺 PITCH & TASTING — นำเสนอ + ให้ชิม</div>
+          <div class="stage-subtitle">ให้ลูกค้า "รู้สึก" กับเบียร์ก่อน — ข้อมูลตามหลัง</div>
+        </div>
+        <div class="time-badge t-amber">⏱ ภายใน 5 วันหลัง Approach</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">🎒 เตรียมไปด้วย</div>
+          <ul>
+            <li>ตัวอย่างเบียร์ 2-3 style (แบบ 330ml)</li>
+            <li>Pricelist (PDF/HTML Mobile)</li>
+            <li>ข้อมูลสินค้า: ABV, IBU, Style, Description</li>
+            <li>นามบัตร / LINE QR Code</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">🗣️ จุดขายที่ต้อง Present</div>
+          <ul>
+            <li>14 SKU Year-Round + 34 Seasonal</li>
+            <li>MOQ = 1 KEG เท่านั้น (ไม่มีขั้นต่ำ)</li>
+            <li>Delivery 1-2 วันทำการ</li>
+            <li>Price: 5,300 - 6,300 ฿/KEG (20L)</li>
+            <li>ผลิตในกรุงเทพฯ สด ไม่ผ่าน Distributor</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>Activity Log: ประเภท = "Tasting"</li>
+            <li>บันทึก Style ที่ชิม + ความเห็นลูกค้า</li>
+            <li>Update Status = <strong>"Tasting"</strong></li>
+            <li>Follow-up ภายใน 48 ชั่วโมง</li>
+          </ul>
+        </div>
+      </div>
+      <div class="criteria-block c-pass">
+        <div class="icon">➡️</div>
+        <div class="text">ลูกค้าสนใจและเริ่มถามเรื่องราคา/เงื่อนไข → Update Status "Negotiating" → ไป Negotiate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">ลูกค้าสนใจสั่งซื้อ</div>
+  </div>
+
+  <!-- STAGE 5: NEGOTIATE -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">5</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s5">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">💬 NEGOTIATE — ต่อรอง</div>
+          <div class="stage-subtitle">ยืนราคา Pricelist · ห้ามลดโดยไม่ได้รับอนุมัติจากเจ้าของ</div>
+        </div>
+        <div class="time-badge t-orange">⏱ ปิดภายใน 7 วัน</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">❓ คำถามที่มักเจอ</div>
+          <ul>
+            <li>ลดราคาได้ไหม? → "ราคานี้รวม VAT แล้ว ไม่มีขั้นต่ำครับ"</li>
+            <li>จ่ายยังไง? → ตอบตามนโยบายบริษัท</li>
+            <li>Shelf life? → แจ้งตามสินค้าแต่ละ SKU</li>
+            <li>ลอง 1 KEG ก่อนได้ไหม? → "ได้เลยครับ MOQ 1 KEG"</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">🚫 ห้ามทำโดยเด็ดขาด</div>
+          <ul>
+            <li style="color:#DC2626; font-weight:600;">ลดราคาโดยไม่ได้รับอนุมัติ</li>
+            <li style="color:#DC2626; font-weight:600;">สัญญาเงื่อนไขพิเศษโดยไม่แจ้งเจ้าของ</li>
+            <li style="color:#DC2626; font-weight:600;">รับ Order โดยไม่ confirm stock</li>
+            <li>อ้างข้อมูลสินค้าที่ไม่แน่ใจ</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>Activity Log: ประเภท = "Negotiation"</li>
+            <li>บันทึกเงื่อนไขที่ลูกค้าขอ</li>
+            <li>Update Status = <strong>"Negotiating"</strong></li>
+            <li>แจ้งเจ้าของถ้ามีเงื่อนไขพิเศษ</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="criteria-block c-pass">
+          <div class="icon">✅</div>
+          <div class="text">ตกลงได้ → ไป Close + รับ Order</div>
+        </div>
+        <div class="criteria-block c-fail">
+          <div class="icon">❌</div>
+          <div class="text">ไม่ตกลง → Status "Not Interested" + บันทึกเหตุผล ค่อยติดตามอีก 3 เดือน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">ตกลงราคาและเงื่อนไขแล้ว</div>
+  </div>
+
+  <!-- STAGE 6: CLOSE -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">6</div>
+      <div class="stage-line"></div>
+    </div>
+    <div class="stage-card s6">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">✅ CLOSE + FIRST ORDER — ปิดการขาย</div>
+          <div class="stage-subtitle">ขั้นตอนนี้สำคัญที่สุด — ต้องเป็นระบบ ไม่ลืมขั้นตอน</div>
+        </div>
+        <div class="time-badge t-green">⏱ ยืนยัน Order ภายใน 24 ชั่วโมง</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">📋 ขั้นตอนปิดการขาย</div>
+          <ul>
+            <li>1. Confirm stock กับทีม 12 Plato ก่อน</li>
+            <li>2. ส่ง Order Form / ใบเสนอราคา</li>
+            <li>3. ยืนยัน Delivery Date กับลูกค้า</li>
+            <li>4. แจ้งทีม Operation รับ Order</li>
+            <li>5. รับการชำระเงิน (ตามนโยบาย)</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">📦 สิ่งที่ต้องแจ้งลูกค้า</div>
+          <ul>
+            <li>KEG Size: 20L เท่านั้น</li>
+            <li>Delivery: 1-2 วันทำการ</li>
+            <li>ต้องมี Tap System รองรับ</li>
+            <li>แนะนำ Cleaning schedule</li>
+            <li>แจ้ง Contact สำหรับ Reorder</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>Update Lead Pipeline Status = <strong>"Customer"</strong></li>
+            <li>เพิ่มข้อมูลใน <strong>Customer Master Sheet</strong></li>
+            <li>บันทึก Volume + KEG brands ที่สั่ง</li>
+            <li>Activity Log: ประเภท = "Order Taken"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="criteria-block c-pass">
+        <div class="icon">🎉</div>
+        <div class="text">Order ยืนยันแล้ว + บันทึกใน Customer Master ครบ → ไป Retain (Follow-up หลังส่งของ)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div style="display:flex; align-items:center; padding-left:74px; height:28px; gap:8px;">
+    <div style="width:2px; height:100%; background:#CBD5E0;"></div>
+    <div style="font-size:11px; color:#9CA3AF; font-style:italic;">ส่งของแล้ว</div>
+  </div>
+
+  <!-- STAGE 7: RETAIN -->
+  <div class="stage-row">
+    <div class="stage-number">
+      <div class="step-circle">7</div>
+    </div>
+    <div class="stage-card s7">
+      <div class="stage-header">
+        <div>
+          <div class="stage-title">💎 RETAIN — รักษาลูกค้า</div>
+          <div class="stage-subtitle">ค่าใช้จ่ายในการหาลูกค้าใหม่ > ค่าใช้จ่ายในการรักษาลูกค้าเก่า 5 เท่า</div>
+        </div>
+        <div class="time-badge t-purple">⏱ Follow-up สม่ำเสมอทุกเดือน</div>
+      </div>
+      <div class="grid-3">
+        <div class="info-block">
+          <div class="label">📅 Timeline Follow-up</div>
+          <ul>
+            <li><strong>+3 วัน:</strong> "เบียร์เป็นอย่างไรบ้างครับ?"</li>
+            <li><strong>+2 สัปดาห์:</strong> แนะนำ SKU ใหม่ / Seasonal</li>
+            <li><strong>ทุกเดือน:</strong> Update menu + ถาม Reorder</li>
+            <li><strong>ทุก 3 เดือน:</strong> เยี่ยมร้าน + ดู Tap condition</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <div class="label">📈 สัญญาณที่ต้องเฝ้าระวัง</div>
+          <ul>
+            <li style="color:#DC2626;">ไม่ Reorder เกิน 6 สัปดาห์ = At Risk</li>
+            <li style="color:#DC2626;">ลด Volume ลงกว่า 30% = ต้องโทรถาม</li>
+            <li style="color:#D97706;">เปลี่ยน Contact person = ต้อง Re-intro</li>
+            <li>มี Complaint → แจ้งทีมทันที</li>
+          </ul>
+        </div>
+        <div class="log-block">
+          <div class="label">✏️ ต้อง LOG ลง System</div>
+          <ul>
+            <li>Activity Log ทุกครั้งที่ติดต่อ</li>
+            <li>Update Customer Master: Volume + Last Order Date</li>
+            <li>Update Status: Active / At Risk / VIP</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Accountability Rules -->
+<div class="accountability-section">
+  <h3>⚡ กฎ Accountability — ไม่มีข้อยกเว้น</h3>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-num">Rule 01</div>
+      <div class="rule-text">ไม่มีข้อมูลใน System = ไม่ถือว่าทำงาน</div>
+      <div class="rule-sub">ทุก Visit, Call, Tasting ต้องมี Log ใน Activity Sheet ภายในวันนั้น</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 02</div>
+      <div class="rule-text">Lead ทุกตัวต้องมี Next Follow-up Date</div>
+      <div class="rule-sub">ถ้า Lead ค้างอยู่ใน Pipeline เกิน 7 วันโดยไม่มี Action = ต้องอธิบาย</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 03</div>
+      <div class="rule-text">Weekly Report ส่งทุกวันศุกร์ 17:00 น.</div>
+      <div class="rule-sub">ระบุ: Activity ที่ทำ / Top 3 Prospects / ติดขัดอะไร / แผนสัปดาห์หน้า</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 04</div>
+      <div class="rule-text">ห้ามลดราคาโดยไม่ได้รับอนุมัติ</div>
+      <div class="rule-sub">ทุกเงื่อนไขพิเศษต้องแจ้งเจ้าของก่อนสัญญากับลูกค้า</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 05</div>
+      <div class="rule-text">ข้อมูลลูกค้าทั้งหมดเป็นของบริษัท</div>
+      <div class="rule-sub">Contact ทุกตัวต้องอยู่ใน System บริษัท ไม่ใช่ในมือถือส่วนตัว</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 06</div>
+      <div class="rule-text">New Leads ต้องมาจากการหาใหม่เท่านั้น</div>
+      <div class="rule-sub">Contact จากงานเก่าไม่นับ จนกว่าจะถูก Record ลง System พร้อมระบุ Source</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; margin-top:20px; font-size:11px; color:#9CA3AF; padding-bottom:20px;">
+  12 Plato Brewing (Fastrak 2015 Co., Ltd.) · Sales Process SOP v1.0 · มีนาคม 2026 · เอกสารนี้ใช้สำหรับ Align กับทีมขาย
+</div>
+
+</body>
+</html>
